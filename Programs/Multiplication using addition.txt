@@ -1,0 +1,13 @@
+{ Sample program in TINY language – computes Multiplication using addition}
+     read N;   {input an integer }
+     read M;   {input an integer }
+     i   :=  M
+     out := 0
+     if 0 < counter then
+     	repeat 
+            out := out + N
+            i   := i   - 1
+        until  i  =  0
+      end
+        write  out   {  output  sum of N*M }
+       

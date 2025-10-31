@@ -1,0 +1,5 @@
+{ Sample program in TINY language – computes Multiplication of N * M }
+     read N;   {input an integer }
+     read M;   {input an integer}
+     out := N * M
+     write  out   {  output Multiplication }  

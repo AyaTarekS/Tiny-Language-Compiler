@@ -1,0 +1,15 @@
+{ Sample program in TINY language – computes is it even ?}
+     read N;   {input an integer }
+     rem := N
+        repeat 
+            rem := rem - 2
+            i  := i   + 1
+        until  rem < 2
+	if  rem = 1 then
+	    isEven := 0
+        end
+        if rem = 0 then
+            isEven := 1
+        end
+        write  isEven   {  output iseven }
+     end  
