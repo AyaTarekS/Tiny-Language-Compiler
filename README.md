@@ -15,7 +15,7 @@ the project is implemented for Design of compilers Course (CSE439s) in Ain Shams
 ---
 
 ## Overview
-    The project implement lexical analysis and syntactic analysis stages, converting raw TINY source code into structured representations suitable for later compilation phases.
+The project implement lexical analysis and syntactic analysis stages, converting raw TINY source code into structured representations suitable for later compilation phases.
 
 The project is structured into two levels:
 
