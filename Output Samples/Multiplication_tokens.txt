@@ -1,0 +1,25 @@
+--- Lexical Analysis of: Multiplication.txt ---
+--------------------------------------------------
+Source Program Content:
+{ Sample program in TINY language – computes Multiplication of N * M }
+     read N;   {input an integer }
+     read M;   {input an integer}
+     out := N * M
+     write  out   {  output Multiplication }  
+
+--------------------------------------------------
+
+--- Token Stream ---
+Type: READ         Value: read
+Type: IDENTIFIER   Value: n
+Type: SEMICOLON    Value: ;
+Type: READ         Value: read
+Type: IDENTIFIER   Value: m
+Type: SEMICOLON    Value: ;
+Type: IDENTIFIER   Value: out
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: n
+Type: MULT         Value: *
+Type: IDENTIFIER   Value: m
+Type: WRITE        Value: write
+Type: IDENTIFIER   Value: out

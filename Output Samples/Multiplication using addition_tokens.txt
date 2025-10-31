@@ -1,0 +1,55 @@
+--- Lexical Analysis of: Multiplication using addition.txt ---
+--------------------------------------------------
+Source Program Content:
+{ Sample program in TINY language – computes Multiplication using addition}
+     read N;   {input an integer }
+     read M;   {input an integer }
+     i   :=  M
+     out := 0
+     if 0 < counter then
+     	repeat 
+            out := out + N
+            i   := i   - 1
+        until  i  =  0
+      end
+        write  out   {  output  sum of N*M }
+       
+
+--------------------------------------------------
+
+--- Token Stream ---
+Type: READ         Value: read
+Type: IDENTIFIER   Value: n
+Type: SEMICOLON    Value: ;
+Type: READ         Value: read
+Type: IDENTIFIER   Value: m
+Type: SEMICOLON    Value: ;
+Type: IDENTIFIER   Value: i
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: m
+Type: IDENTIFIER   Value: out
+Type: ASSIGN       Value: :=
+Type: NUMBER       Value: 0
+Type: IF           Value: if
+Type: NUMBER       Value: 0
+Type: LESSTHAN     Value: <
+Type: IDENTIFIER   Value: counter
+Type: THEN         Value: then
+Type: REPEAT       Value: repeat
+Type: IDENTIFIER   Value: out
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: out
+Type: PLUS         Value: +
+Type: IDENTIFIER   Value: n
+Type: IDENTIFIER   Value: i
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: i
+Type: MINUS        Value: -
+Type: NUMBER       Value: 1
+Type: UNTIL        Value: until
+Type: IDENTIFIER   Value: i
+Type: EQUAL        Value: =
+Type: NUMBER       Value: 0
+Type: END          Value: end
+Type: WRITE        Value: write
+Type: IDENTIFIER   Value: out

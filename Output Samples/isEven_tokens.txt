@@ -1,0 +1,64 @@
+--- Lexical Analysis of: isEven.txt ---
+--------------------------------------------------
+Source Program Content:
+{ Sample program in TINY language – computes is it even ?}
+     read N;   {input an integer }
+     rem := N
+        repeat 
+            rem := rem - 2
+            i  := i   + 1
+        until  rem < 2
+	if  rem = 1 then
+	    isEven := 0
+        end
+        if rem = 0 then
+            isEven := 1
+        end
+        write  isEven   {  output iseven }
+     end  
+
+--------------------------------------------------
+
+--- Token Stream ---
+Type: READ         Value: read
+Type: IDENTIFIER   Value: n
+Type: SEMICOLON    Value: ;
+Type: IDENTIFIER   Value: rem
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: n
+Type: REPEAT       Value: repeat
+Type: IDENTIFIER   Value: rem
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: rem
+Type: MINUS        Value: -
+Type: NUMBER       Value: 2
+Type: IDENTIFIER   Value: i
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: i
+Type: PLUS         Value: +
+Type: NUMBER       Value: 1
+Type: UNTIL        Value: until
+Type: IDENTIFIER   Value: rem
+Type: LESSTHAN     Value: <
+Type: NUMBER       Value: 2
+Type: IF           Value: if
+Type: IDENTIFIER   Value: rem
+Type: EQUAL        Value: =
+Type: NUMBER       Value: 1
+Type: THEN         Value: then
+Type: IDENTIFIER   Value: iseven
+Type: ASSIGN       Value: :=
+Type: NUMBER       Value: 0
+Type: END          Value: end
+Type: IF           Value: if
+Type: IDENTIFIER   Value: rem
+Type: EQUAL        Value: =
+Type: NUMBER       Value: 0
+Type: THEN         Value: then
+Type: IDENTIFIER   Value: iseven
+Type: ASSIGN       Value: :=
+Type: NUMBER       Value: 1
+Type: END          Value: end
+Type: WRITE        Value: write
+Type: IDENTIFIER   Value: iseven
+Type: END          Value: end

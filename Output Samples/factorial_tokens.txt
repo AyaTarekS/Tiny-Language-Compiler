@@ -1,0 +1,46 @@
+--- Lexical Analysis of: factorial.txt ---
+--------------------------------------------------
+Source Program Content:
+{ Sample program in TINY language – computes factorial}
+     read x;   {input an integer }
+     if  0 < x   then     {  don’t compute if x <= 0 }
+        fact  := 1
+        repeat 
+           fact  := fact *  x
+            x  := x  -  1
+        until  x  =  0
+        write  fact   {  output  factorial of x }
+     end  
+
+--------------------------------------------------
+
+--- Token Stream ---
+Type: READ         Value: read
+Type: IDENTIFIER   Value: x
+Type: SEMICOLON    Value: ;
+Type: IF           Value: if
+Type: NUMBER       Value: 0
+Type: LESSTHAN     Value: <
+Type: IDENTIFIER   Value: x
+Type: THEN         Value: then
+Type: IDENTIFIER   Value: fact
+Type: ASSIGN       Value: :=
+Type: NUMBER       Value: 1
+Type: REPEAT       Value: repeat
+Type: IDENTIFIER   Value: fact
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: fact
+Type: MULT         Value: *
+Type: IDENTIFIER   Value: x
+Type: IDENTIFIER   Value: x
+Type: ASSIGN       Value: :=
+Type: IDENTIFIER   Value: x
+Type: MINUS        Value: -
+Type: NUMBER       Value: 1
+Type: UNTIL        Value: until
+Type: IDENTIFIER   Value: x
+Type: EQUAL        Value: =
+Type: NUMBER       Value: 0
+Type: WRITE        Value: write
+Type: IDENTIFIER   Value: fact
+Type: END          Value: end
