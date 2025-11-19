@@ -163,23 +163,11 @@ def scanningFile(file_path: Path) -> Tuple[List[List[str]], List[List[str]], str
 
 
 def main():
-    # for the command-line argument: [0] is script (./scanner.exe), [1] is file path (should be in the same directory as exe file)
-    if len(sys.argv) != 2:
-        print("Usage: python_scanner.exe <path_to_input_file>")
-        print("\nExample: python_scanner.exe \"C:\\Users\\User\\Desktop\\factorial.txt\"")
-        
-        # --- Pause on usage error so the user can read the instructions ---
-        try:
-            input("\nPress Enter to exit...")
-        except EOFError:
-            # Handle case where no input is available
-            pass
-        # Exit with error code
-        sys.exit(1)
 
 
+    prompt = "Please enter the file path without any (\"\") for the scanning operation:"
         
-    input_path = Path(sys.argv[1])
+    input_path = Path(input(prompt))
     
     code_token_types, code_token_values, program_content = scanningFile(input_path)
     
