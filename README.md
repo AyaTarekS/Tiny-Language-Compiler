@@ -88,6 +88,8 @@ Follow these steps to set up and run the application:
    ```bash
    ./scanner.exe "the code file path"
    ```
+7. **Using the exe file directly**
+   - Entering the path directly to it.
  
 ---
 
@@ -119,5 +121,6 @@ Tiny-Language-Compiler/
 ---
 
 ## License
+
 
 This project is licensed under the [MIT](LICENSE).
