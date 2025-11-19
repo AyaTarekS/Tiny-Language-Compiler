@@ -8,6 +8,7 @@ TOKEN_MAP = {
     ";": "SEMICOLON",
     "if": "IF",
     "then": "THEN",
+    "else": "ELSE",
     "end": "END",
     "repeat": "REPEAT",
     "until": "UNTIL",
