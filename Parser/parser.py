@@ -392,34 +392,26 @@ def run_parser(file_path):
 def print_tree_as_json(parse_result):
     """
     Prints the parse result as a formatted JSON string.
-    
-    Args:
-        parse_result (dict): The dictionary returned by run_parser.
+    Handles converting ASTNode objects to dicts automatically.
     """
-    if parse_result.get("status") == "Rejected":
-        print(json.dumps(parse_result, indent=4))
-        return
+    # Create a copy or a new dict to avoid modifying the original if needed
+    output = {
+        "status": parse_result["status"],
+        "root": None,
+        "errors": parse_result["errors"]
+    }
 
+    # Convert root to dict if it exists (even in Rejected status, we might have a partial tree)
     root_node = parse_result.get("root")
-    if root_node:
-        tree_dict = root_node.to_dict()
-        output = {
-            "status": parse_result["status"],
-            "root": tree_dict,
-            "errors": parse_result["errors"]
-        }
-        print(json.dumps(output, indent=4))
-    else:
-        # Handle cases where status is Error or no root exists
-        print(json.dumps(parse_result, indent=4))
+    if root_node and hasattr(root_node, 'to_dict'):
+        output["root"] = root_node.to_dict()
+    
+    # Now it is safe to dump because 'root' is a pure dictionary
+    print(json.dumps(output, indent=4))
 
 def save_tree_to_json(parse_result, output_file_path):
     """
     Saves the parse result to a JSON file.
-    
-    Args:
-        parse_result (dict): The dictionary returned by run_parser.
-        output_file_path (str): The path where the JSON file will be saved.
     """
     output = {
         "status": parse_result["status"],
@@ -427,13 +419,15 @@ def save_tree_to_json(parse_result, output_file_path):
         "errors": parse_result["errors"]
     }
 
-    if parse_result["root"]:
-        output["root"] = parse_result["root"].to_dict()
+    # Convert root to dict if it exists
+    root_node = parse_result.get("root")
+    if root_node and hasattr(root_node, 'to_dict'):
+        output["root"] = root_node.to_dict()
 
     try:
         with open(output_file_path, 'w') as f:
             json.dump(output, f, indent=4)
-        print(f"Successfully saved syntax tree to {output_file_path}")
+        print(f"Successfully saved output to {output_file_path}")
     except IOError as e:
         print(f"Error writing to file {output_file_path}: {e}")
 
@@ -442,7 +436,7 @@ def save_tree_to_json(parse_result, output_file_path):
 # ------------------------------------------------------------------
 if __name__ == "__main__":
     # Create a dummy file for testing purposes
-    sample_file = "factorial.txt"
+    sample_file = "input_samples//pathological.txt"
     
     print(f"Running parser on {sample_file}...")
     result = run_parser(sample_file)
