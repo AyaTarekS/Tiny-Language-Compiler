@@ -125,10 +125,16 @@ class Parser:
     def stmt_sequence(self, depth):
         """
         stmt-sequence -> statement { ; statement }
-        
-        Constructs a linear sequence of statements linked via the 'sibling' attribute.
         """
         first_stmt = self.statement(depth)
+        
+        # FIX: A sequence must start with at least one statement
+        if not first_stmt:
+            # Only record error if we haven't already recorded one (e.g. from inside statement)
+            if not self.errors or "Unexpected token" not in self.errors[-1]:
+                 self.errors.append(f"Syntax Error: Expected statement, found EOF.")
+            return None
+
         current_stmt = first_stmt
         
         while True:
@@ -136,7 +142,13 @@ class Parser:
             if token and token[1] == 'SEMICOLON':
                 self.match('SEMICOLON')
                 next_stmt = self.statement(depth)
-                if current_stmt and next_stmt:
+                
+                # FIX: Ensure a statement follows the semicolon
+                if not next_stmt:
+                     self.errors.append(f"Syntax Error: Expected statement after ';', found EOF.")
+                     break
+                
+                if current_stmt:
                     current_stmt.sibling = next_stmt 
                     current_stmt = next_stmt
             else:
@@ -316,7 +328,10 @@ class Parser:
         factor -> ( exp ) | number | identifier
         """
         token = self.get_token()
+        
+        # FIX: Check for EOF explicitly. A factor is mandatory.
         if not token:
+            self.errors.append(f"Syntax Error: Unexpected End of File. Expected expression.")
             return None
         
         if token[1] == 'OPENBRACKET':
@@ -435,10 +450,27 @@ def save_tree_to_json(parse_result, output_file_path):
 # Sample Usage
 # ------------------------------------------------------------------
 if __name__ == "__main__":
-    # Create a dummy file for testing purposes
-    sample_file = "input_samples//pathological.txt"
+    import sys
+    import os
+
+    # Check if a file path was provided as an argument
+    if len(sys.argv) < 2:
+        print("Usage: python parser.py <path_to_tokens_file>")
+        print("Example: python parser.py input_samples/factorial.txt")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+
+    if not os.path.exists(file_path):
+        print(f"Error: File '{file_path}' not found.")
+        sys.exit(1)
+
+    print(f"Running parser on {file_path}...")
+    result = run_parser(file_path)
     
-    print(f"Running parser on {sample_file}...")
-    result = run_parser(sample_file)
+    # Print to console
     print_tree_as_json(result)
-    save_tree_to_json(result, "result.json")
+    
+    # Save to JSON file (using the input filename for the output)
+    output_filename = f"{os.path.splitext(os.path.basename(file_path))[0]}_result.json"
+    save_tree_to_json(result, output_filename)

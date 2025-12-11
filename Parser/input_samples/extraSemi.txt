@@ -1,0 +1,6 @@
+read, READ 
+x, IDENTIFIER 
+;, SEMICOLON 
+write, WRITE 
+x, IDENTIFIER 
+;, SEMICOLON   
