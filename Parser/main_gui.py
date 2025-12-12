@@ -314,12 +314,30 @@ class ASTRenderer:
 
         # Lines to children: parent bottom-center -> child top-center
         for child in getattr(node, "children", []) or []:
-            if not child or child.id not in self.node_positions: continue
+            if not child or child.id not in self.node_positions:
+                continue
+
             cx_child, y_child = self.node_positions[child.id]
-            p1 = QPointF(cx, y_top + NODE_HEIGHT)               # parent bottom-center
-            p2 = QPointF(cx_child, y_child)                    # child top-center (y_child is top)
+            p1 = QPointF(cx,     y_top + NODE_HEIGHT)   # parent bottom-center
+            p2 = QPointF(cx_child, y_child)             # child top-center
+
             conn = QGraphicsLineItem(p1.x(), p1.y(), p2.x(), p2.y())
-            pen = QPen(DEFAULT_LINE_COLOR); pen.setWidth(3)
+
+            # -------------------------
+            # DASHED LINE FOR ELSE
+            # -------------------------
+            pen = QPen(DEFAULT_LINE_COLOR)
+            pen.setWidth(3)
+
+            try:
+                # If node is IF, and its 2nd child is ELSE → dashed
+                if getattr(node, "node_type", "").upper() == "IF":
+                    children = getattr(node, "children", [])
+                    if len(children) == 3 and child is children[2]:
+                        pen.setStyle(Qt.DashLine)
+            except:
+                pass
+
             conn.setPen(pen)
             self.scene.addItem(conn)
 
