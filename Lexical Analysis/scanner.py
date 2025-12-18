@@ -70,7 +70,7 @@ def get_token(line: str, in_comment: bool) -> Tuple[List[str], List[str], bool]:
                 continue
             else:
                 # Comment continues to the next line (ignore the rest of this line)
-                return tokens_type_list, tokens_value_list, True
+                return tokens_value_list, tokens_type_list, True
 
         # 1b. Skip Whitespace only if not in a comment
         if char.isspace():
@@ -89,7 +89,7 @@ def get_token(line: str, in_comment: bool) -> Tuple[List[str], List[str], bool]:
             else:
                 # Multi-line comment starts on this line, continues to the next
                 # The rest of this line is ignored, and the state is returned as True
-                return tokens_type_list, tokens_value_list, True
+                return tokens_value_list, tokens_type_list, True
             continue
 
         # 3. Handle Numbers
@@ -141,10 +141,10 @@ def get_token(line: str, in_comment: bool) -> Tuple[List[str], List[str], bool]:
         print(f"Lexical Error: Unrecognized character '{char}' on line: {line}")
         i += 1
         
-    return tokens_type_list, tokens_value_list, in_comment
+    return tokens_value_list, tokens_type_list, in_comment
 
 
-def scanningFile(file_path: Path) -> Tuple[List[List[str]], List[List[str]], str]:
+def scanningFile(file_path: Path) -> Tuple[List[List[str]], List[List[str]]]:
     """
     Parses source code into a tuple of Token objects with the source code itself.
 
@@ -152,7 +152,7 @@ def scanningFile(file_path: Path) -> Tuple[List[List[str]], List[List[str]], str
         file_path (Path): The input file.
 
     Returns:
-        Tuples[list[str], list[str], str]: list of parsed tokens types and values with the source code itself.
+        Tuples[list[str], list[str]]: list of parsed tokens types and values with the source code itself.
         
     """
     code_token_values: List[List[str]] = []
@@ -168,14 +168,14 @@ def scanningFile(file_path: Path) -> Tuple[List[List[str]], List[List[str]], str
         # spliting the code by lines
         for line in program_content.strip().split('\n'):
             # Pass the current comment state and receive the new state
-            line_token_types, line_token_values, in_comment = get_token(line, in_comment)
+            line_token_values, line_token_types, in_comment = get_token(line, in_comment)
             
             # Only append tokens if some were found (i.e., line was not entirely a comment)
             if line_token_types:
                 code_token_types.append(line_token_types)
                 code_token_values.append(line_token_values)
 
-        return code_token_types, code_token_values, program_content
+        return code_token_values, code_token_types 
         
     except FileNotFoundError:
         print(f"Error: Input file not found at '{file_path}'")
@@ -208,27 +208,17 @@ def main():
         
     input_path = Path(input_raw)
     
-    code_token_types, code_token_values, program_content = scanningFile(input_path)
+    code_token_values, code_token_types = scanningFile(input_path)
     
     output_path = input_path.with_name(f"{input_path.stem}_tokens.txt")
     
     # Write the results to the output file
     try:
         with open(output_path, 'w', encoding='utf-8') as outfile:
-            # Write the source code in the output file
-            outfile.write(f"--- Lexical Analysis of: {input_path.name} ---\n")
-            outfile.write("-" * 50 + "\n")
-            outfile.write(f"Source Program Content:\n{program_content}\n")
-            outfile.write("-" * 50 + "\n\n")
-            # Write the Tokens from the scanner
-            outfile.write("--- Token Stream ---\n")
+            # main functionality: writing the tokens to the output file
             for token_types, token_values in zip(code_token_types, code_token_values):
                 for t_type, t_value in zip(token_types, token_values):
-                    outfile.write(f"Type: {t_type:<12} Value: {t_value}\n")
-
-        print(f"\n--- Scan Complete ---")
-        print(f"Token list successfully written to: {output_path}")
-        print(f"Output file location: {output_path.absolute()}")
+                    outfile.write(f"{t_value},{t_type}\n")
 
     except Exception as e:
         print(f"Error writing output file to {output_path}: {e}")
