@@ -28,7 +28,7 @@ TOKEN_MAP = {
 }
 
 # for reserved words and symbols
-KEYWORDS = {"if", "then", "end", "repeat", "until", "read", "write"}
+KEYWORDS = {"if", "then", "end", "repeat", "until", "read", "write", "else"}
 SPECIAL_SYMBOLS = {";", "+", "-", "*", "/", "(", ")", "<", "=", ":="}
 
 
